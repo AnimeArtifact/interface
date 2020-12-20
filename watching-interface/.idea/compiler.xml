@@ -6,8 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="interface" />
-        <module name="anime-artifact-interface" />
+        <module name="watching-interface" />
       </profile>
     </annotationProcessing>
   </component>
