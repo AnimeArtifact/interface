@@ -1,5 +1,6 @@
 package love.tanyiqu.service.impl;
 
+import love.tanyiqu.pojo.Episode;
 import love.tanyiqu.pojo.Film;
 import love.tanyiqu.service.FilmService;
 import love.tanyiqu.util.HtmlUtil;
@@ -25,9 +26,9 @@ public class FilmService_zdzy5 implements FilmService {
     // 请求连接
     private static final String REQUEST_URL = "http://www.zuidazy4.com/index.php?m=vod-search";
 
-
     // 维护一个filmList，在多线程中使用
     private List<Film> filmList = new ArrayList<>();
+
 
     @Override
     public List<Film> searchFilms(String filmName) {
@@ -114,12 +115,51 @@ public class FilmService_zdzy5 implements FilmService {
     }
 
 
+    @Override
+    public List<Episode> getEpisodes(String filmUrl) {
+        // 获取html
+        String html;
+        try {
+            html = HtmlUtil.getHtmlPost(filmUrl, new HashMap<>());
+        } catch (IOException e) {
+            return new ArrayList<>();
+        }
+
+        Document doc = Jsoup.parse(html);
+
+        Elements elements = doc.getElementById("play_1").select("li");
+
+        List<Episode> episodeList = new ArrayList<>();
+        for (Element element : elements) {
+            Episode episode = new Episode();
+            String[] strings = element.text().split("\\$");
+            episode.setEpisodeName(strings[0]);
+            episode.setEpisodeUrl(strings[1]);
+            episodeList.add(episode);
+        }
+
+        return episodeList;
+    }
+
+    @Override
+    public List<Episode> getEpisodes(Film film) {
+        return getEpisodes(film.getFilmUrl());
+    }
+
+
     @Test
     public void test_searchFilms() {
-        List<Film> filmList = searchFilms("你的名字");
-
+        List<Film> filmList = searchFilms("魔法少女伊莉雅");
         for (Film film : filmList) {
             System.out.println(film);
+        }
+    }
+
+    @Test
+    public void test_getEpisodes() {
+        List<Episode> episodeList = getEpisodes("http://www.zuidazy4.com/?m=vod-detail-id-74998.html");
+        for (Episode episode : episodeList) {
+            System.out.println(episode);
         }
     }
 
