@@ -20,7 +20,7 @@ import java.util.Map;
 public class HtmlUtil {
 
     // 使用post请求获取html
-    public String getHtmlPost(String url, Map<String, String> params) throws IOException {
+    public static String getHtmlPost(String url, Map<String, String> params) throws IOException {
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
         HttpPost httpPost = new HttpPost(url);
@@ -36,6 +36,7 @@ public class HtmlUtil {
 
         // 设置表单的entity对象到post请求中
         httpPost.setEntity(formEntity);
+        //noinspection SpellCheckingInspection
         httpPost.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4372.0 Safari/537.36 Edg/89.0.752.1 FS");
 
         CloseableHttpResponse response = httpClient.execute(httpPost);
@@ -56,7 +57,7 @@ public class HtmlUtil {
     }
 
     @Test
-    public void test() throws IOException {
+    public void test_getHtmlPost() throws IOException {
         String url = "http://www.zuidazy4.com/index.php?m=vod-search";
 
         Map<String, String> params = new HashMap<>();

@@ -1,7 +1,5 @@
 package love.tanyiqu.pojo;
 
-import java.util.List;
-
 @SuppressWarnings("unused")
 public class Film {
     // 影片名
@@ -10,20 +8,21 @@ public class Film {
     // 影片链接
     private String filmUrl;
 
+    // 类型
+    private String type;
+
     // 影片封面
     private String filmCover;
 
-    // 影片的集数列表
-    private List<Episode> episodeList;
-
     public Film() {
+        this.type = "类型";
     }
 
-    public Film(String filmName, String filmUrl, String filmCover, List<Episode> episodeList) {
+    public Film(String filmName, String filmUrl, String type, String filmCover) {
         this.filmName = filmName;
         this.filmUrl = filmUrl;
+        this.type = type;
         this.filmCover = filmCover;
-        this.episodeList = episodeList;
     }
 
     public String getFilmName() {
@@ -50,12 +49,12 @@ public class Film {
         this.filmCover = filmCover;
     }
 
-    public List<Episode> getEpisodeList() {
-        return episodeList;
+    public String getType() {
+        return type;
     }
 
-    public void setEpisodeList(List<Episode> episodeList) {
-        this.episodeList = episodeList;
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override
@@ -63,8 +62,8 @@ public class Film {
         return "Film{" +
                 "filmName='" + filmName + '\'' +
                 ", filmUrl='" + filmUrl + '\'' +
+                ", type='" + type + '\'' +
                 ", filmCover='" + filmCover + '\'' +
-                ", episodeList=" + episodeList +
                 '}';
     }
 }
