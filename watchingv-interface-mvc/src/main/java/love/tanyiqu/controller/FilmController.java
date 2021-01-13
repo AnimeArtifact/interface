@@ -1,5 +1,6 @@
 package love.tanyiqu.controller;
 
+import love.tanyiqu.dto.ServerResponse;
 import love.tanyiqu.pojo.Film;
 import love.tanyiqu.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +23,20 @@ public class FilmController {
 
     @RequestMapping("/search")
     @ResponseBody
-    public List<Film> search() {
+    public ServerResponse<Object> search() {
         List<Film> films = filmService.searchFilms("你的名字");
 
         for (Film film : films) {
             System.out.println(film);
         }
 
-        return films;
+        return ServerResponse.createSuccess("查询成功 ", films);
     }
+
+    @RequestMapping("/error")
+    @ResponseBody
+    public ServerResponse<Object> error() {
+        return ServerResponse.createError("失败了");
+    }
+
 }
